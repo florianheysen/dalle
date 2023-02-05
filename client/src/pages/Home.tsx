@@ -80,7 +80,7 @@ function Home() {
 
         <div className="mt-16">
           <FormField
-            labelName="Search Posts"
+            label="Search Posts"
             type="text"
             name="text"
             placeholder="Search Posts"

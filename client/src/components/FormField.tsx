@@ -1,15 +1,27 @@
 import React from "react";
 
-function FormField({
-  labelName,
-  type,
-  name,
-  placeholder,
-  value,
-  handleChange,
-  isSurpriseMe,
-  handleSurpriseMe,
-}) {
+interface FormFieldProps {
+  label: string;
+  type: string;
+  name: string;
+  placeholder: string;
+  value: any;
+  handleChange: any;
+  isSurpriseMe?: boolean;
+  handleSurpriseMe?: any;
+}
+
+function FormField(props: FormFieldProps) {
+  const {
+    label,
+    type,
+    name,
+    placeholder,
+    value,
+    handleChange,
+    isSurpriseMe,
+    handleSurpriseMe,
+  } = props;
   return (
     <>
       <div className="flex items-center mt-4">
@@ -17,13 +29,13 @@ function FormField({
           htmlFor={name}
           className="block text-sm font-medium text-gray-900"
         >
-          {labelName}
+          {label}
         </label>
         {isSurpriseMe && (
           <button
             type="button"
             onClick={handleSurpriseMe}
-            className="font-semibold text-xs bg-gray-100 hover:bg-gray-200 py-1 px-2 rounded text-black"
+            className="ml-2 font-semibold text-xs bg-gray-100 hover:bg-gray-200 py-1 px-2 rounded text-black"
           >
             Surprise me
           </button>

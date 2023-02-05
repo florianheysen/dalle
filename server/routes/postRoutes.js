@@ -1,6 +1,7 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import { v2 as cloudinary } from "cloudinary";
+import { Logtail } from "@logtail/node";
 
 import Post from "../mongodb/models/post.js";
 
@@ -13,6 +14,8 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+
+const logtail = new Logtail(process.env.LOGTAIL_TOKEN);
 
 router.route("/").get(async (req, res) => {
   try {
@@ -36,8 +39,15 @@ router.route("/").post(async (req, res) => {
       photo: photoUrl.url,
     });
 
+    logtail.info("Image posted through Cloudinary & MongoDB", {
+      name: name,
+      prompt: prompt,
+      photoUrl: photoUrl.url,
+    });
+
     res.status(201).json({ success: true, data: newPost });
   } catch (error) {
+    logtail.error(error);
     res.status(500).json({ success: false, message: error });
   }
 });
